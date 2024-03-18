@@ -53,13 +53,16 @@ const loginCtrl = async (req, res) => {
             return
         }
 
+        user.set('password', undefined, {strict:false})
+
         const data = {
-            token: tokenSign(user),
+            token: await tokenSign(user),
             user
         }
         res.send({data})
 
     }catch(e){
+        console.log(e)
         handleHttpError(res, "ERROR_LOGIN_USER")
     }
 }
